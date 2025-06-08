@@ -447,16 +447,6 @@ docker-compose down
 docker-compose down -v
 ```
 
-### Variáveis de Ambiente
-
-```env
-# .env (opcional)
-ENVIRONMENT=development
-API_HOST=0.0.0.0
-API_PORT=8000
-LOG_LEVEL=info
-```
-
 ### Health Checks
 
 ```bash
@@ -468,7 +458,3 @@ docker inspect simulador-amora-api | grep Health
 ```
 
 ---
-
-<div align="center">
-
-</div>
