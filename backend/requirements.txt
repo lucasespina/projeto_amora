@@ -1,0 +1,24 @@
+# Dependências do Simulador aMORA
+# ================================
+
+# Framework web principal
+fastapi==0.104.1
+
+# Servidor ASGI para produção
+uvicorn[standard]==0.24.0
+
+# Validação de dados
+pydantic==2.5.0
+
+# Testes
+pytest==7.4.3
+pytest-asyncio==0.21.1
+httpx==0.25.2
+pytest-cov==4.1.0
+
+# Formatação de código
+black==23.11.0
+isort==5.12.0
+
+# Linting
+flake8==6.1.0

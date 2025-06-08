@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Simulador aMORA para compra de imóvel - Calcule entrada, financiamento e reservas necessárias">
+    <meta name="keywords" content="simulador, imóvel, financiamento, aMORA, calculadora">
+    <meta name="author" content="Simulador aMORA">
+    
+    <!-- SEO e Open Graph -->
+    <meta property="og:title" content="Simulador aMORA - Compra de Imóvel">
+    <meta property="og:description" content="Simule sua compra de imóvel de forma simples e rápida">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://simulador-amora.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==">
+    
+    <title>Simulador aMORA - Compra de Imóvel</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style/style.css">
+    
+    <!-- Preload para melhor performance -->
+    <link rel="preload" href="script/script.js" as="script">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Simulador aMORA</h1>
+            <p>Simule sua compra de imóvel de forma simples e rápida</p>
+        </header>
+
+        <!-- Conteúdo principal -->
+        <main class="main-content">
+            <!-- Formulário -->
+            <section class="form-container" role="form">
+                <h2>Dados do Imóvel</h2>
+                
+                <form id="simulatorForm" novalidate>
+                    <div class="form-group">
+                        <label for="valorImovel">
+                            Valor do Imóvel (R$)
+                            <span aria-label="obrigatório">*</span>
+                        </label>
+                        <input 
+                            type="number" 
+                            id="valorImovel" 
+                            name="valorImovel" 
+                            placeholder="Ex: 400000"
+                            min="0.01"
+                            step="0.01"
+                            required
+                            aria-describedby="valorImovelInfo errorValorImovel"
+                            autocomplete="off"
+                        >
+                        <div class="input-info" id="valorImovelInfo">
+                            Digite qualquer valor acima de zero
+                        </div>
+                        <div class="error-message" id="errorValorImovel" role="alert"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="percentualEntrada">
+                            Percentual de Entrada (%)
+                            <span aria-label="obrigatório">*</span>
+                        </label>
+                        <input 
+                            type="number" 
+                            id="percentualEntrada" 
+                            name="percentualEntrada" 
+                            placeholder="Ex: 10"
+                            min="5" 
+                            max="20"
+                            step="0.1"
+                            required
+                            aria-describedby="percentualEntradaInfo errorPercentualEntrada"
+                            autocomplete="off"
+                        >
+                        <div class="input-info" id="percentualEntradaInfo">
+                            Entre 5% e 20%
+                        </div>
+                        <div class="error-message" id="errorPercentualEntrada" role="alert"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="anosContrato">
+                            Duração do Contrato (anos)
+                            <span aria-label="obrigatório">*</span>
+                        </label>
+                        <input 
+                            type="number" 
+                            id="anosContrato" 
+                            name="anosContrato" 
+                            placeholder="Ex: 3"
+                            min="1" 
+                            max="5"
+                            step="1"
+                            required
+                            aria-describedby="anosContratoInfo errorAnosContrato"
+                            autocomplete="off"
+                        >
+                        <div class="input-info" id="anosContratoInfo">
+                            Entre 1 e 5 anos
+                        </div>
+                        <div class="error-message" id="errorAnosContrato" role="alert"></div>
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        class="btn" 
+                        id="submitBtn"
+                        aria-describedby="submitBtnInfo"
+                    >
+                        Simular
+                    </button>
+                    
+                    <div class="input-info" id="submitBtnInfo" style="text-align: center; margin-top: 10px;">
+                        💡 Dica: Use Ctrl+Enter para simular rapidamente
+                    </div>
+                </form>
+
+                <div id="errorState" class="error-state" role="alert" style="display: none;"></div>
+            </section>
+
+            <!-- Resultados -->
+            <section class="results-container" role="region" aria-label="Resultados da simulação">
+                <h2>Resultados da Simulação</h2>
+                
+                <!-- Placeholder quando não há resultados -->
+                <div class="results-placeholder" id="resultsPlaceholder">
+                    <div class="icon" aria-hidden="true">🏠</div>
+                    <h3>Preencha os dados e clique em "Simular"</h3>
+                    <p>Os resultados da sua simulação aparecerão aqui</p>
+                </div>
+
+                <!-- Conteúdo dos resultados -->
+                <div class="results-content" id="resultsContent" aria-live="polite">
+                    <div class="result-item">
+                        <span class="result-label">Valor da Entrada:</span>
+                        <span class="result-value" id="resultValorEntrada" aria-label="Valor da entrada">R$ 0,00</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">Valor a Financiar:</span>
+                        <span class="result-value" id="resultValorFinanciado" aria-label="Valor a financiar">R$ 0,00</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">Total a Guardar:</span>
+                        <span class="result-value" id="resultTotalGuardar" aria-label="Total a guardar">R$ 0,00</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">Valor Mensal a Guardar:</span>
+                        <span 
+                            class="result-value highlight" 
+                            id="resultParcelaMensal" 
+                            aria-label="Valor mensal a guardar - resultado principal"
+                        >R$ 0,00</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="script/script.js"></script>
+    
+    <!-- Service Worker para PWA (opcional) -->
+    <script>
+        // Registrar Service Worker se disponível
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('Service Worker registrado'))
+                .catch(() => console.log('Service Worker não disponível'));
+        }
+    </script>
+</body>
+</html>
